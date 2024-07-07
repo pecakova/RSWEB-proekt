@@ -1,0 +1,23 @@
+﻿@model List<Music.Models.UpcomingAlbum>
+
+@{
+    ViewData["Title"] = "Upcoming Albums";
+}
+
+<h2>Upcoming</h2>
+
+<div class="row">
+    @foreach (var album in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@Url.Content(album.FrontPage)" class="card-img-top" alt="Album Cover">
+                <div class="card-body">
+                    <h5 class="card-title">@album.Title</h5>
+                    <p>@album.Artist</p>
+                    <p class="card-text">Release Date: @album.ReleaseDate.ToShortDateString()</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

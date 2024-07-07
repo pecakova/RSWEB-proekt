@@ -1,0 +1,99 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.custom-navbar {
+    background-color: black;
+    border-bottom: 1px solid white;
+    box-shadow: 0 4px 2px -2px gray;
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link {
+        color: white !important;
+}
+
+.custom-filter-button {
+    margin-top: 5px;
+    border-color: black;
+    color: black;
+    background-color: white;
+    transition: background-color 0.3s, color 0.3s; /* Add transition for smooth effect */
+}
+.custom-filter-button:hover {
+        background-color: black;
+        color: white;
+        border-color: black; /* Optional: change border color on hover */
+}
+.custom-album-card {
+    width: 25 rem; /* Adjust the width as needed */
+    margin-bottom: 1rem; 
+    margin-left: 1rem;/* Add some spacing between cards */
+}
+.custom-create-button {
+    margin-top: 5px;
+    border-color: black;
+    color: black;
+    background-color: white;
+    transition: background-color 0.3s, color 0.3s; /* Add transition for smooth effect */
+}
+
+.custom-create-button:hover {
+        background-color: black;
+        color: white;
+        border-color: black; /* Optional: change border color on hover */
+}
+.custom-album-card img {
+        height: auto; /* Ensure images are resized proportionally */
+}
+.list-group-item {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.list-group-item:first-of-type {
+        border-top: none;
+        padding-top: 0;
+        margin-top: 0;
+}
+.custom-btn {
+    background-color: transparent;
+    border-color: darkgoldenrod;
+    color: black;
+    transition: background-color 0.3s ease; /* Add smooth transition */
+}
+
+    .custom-btn:hover {
+        background-color: darkgoldenrod;
+        color: black; /* Change text color to white on hover */
+    }
+
+    .custom-btn:active,
+    .custom-btn:focus {
+        background-color: goldenrod; /* Change background color when clicked/focused */
+        border-color: goldenrod; /* Optionally change border color on click/focus */
+        color: black; /* Change text color to white on click/focus */
+    }
+
+
+
+

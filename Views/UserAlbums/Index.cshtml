@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Music.Models.UserAlbum>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align: center; font-family: 'Helvetica', sans-serif; font-weight: bold; color: darkgoldenrod; border-bottom: 2px solid darkgoldenrod;">Your Albums</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Album.Title)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img height="150px" src="@Html.DisplayFor(modelItem => item.Album.FrontPage)" alt="Album cover">
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Album.Title)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Album.Id"><i class="fa-solid fa-circle-info" style="color: black; font-size: 27px"></i></a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <p></p>
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: black; font-size: 27px"></i></a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

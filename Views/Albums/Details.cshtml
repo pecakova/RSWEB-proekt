@@ -1,0 +1,64 @@
+﻿@model Music.Models.Album
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Album Cover -->
+        <div class="col-md-4">
+            <img src="@Model.FrontPage" class="img-fluid" alt="Album Cover">
+        </div>
+
+        <!-- Album Details -->
+        <div class="col-md-4">
+            <h2>@Model.Title</h2>
+            <p><strong>Artist:</strong> @Model.Artist.StageName</p>
+            <p><strong>Year:</strong> @Model.YearPublished</p>
+            <p><strong>Number of Songs:</strong> @Model.NumSongs</p>
+            <p><strong>Playlist:</strong> @Model.Playlist</p>
+        </div>
+
+        <!-- Genres and Reviews -->
+        <div class="col-md-4">
+            <!-- Genres -->
+            <div>
+                <h3>Genres</h3>
+                <ul>
+                    @foreach (var genre in Model.AlbumGenres)
+                    {
+                        <li><a asp-controller="Genres" asp-action="Details" asp-route-id="@genre.GenreId">@genre.Genre.GenreName</a></li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Reviews -->
+            <div class="mt-4">
+                <h3>Reviews</h3>
+                @if (Model.Reviews != null && Model.Reviews.Count > 0)
+                {
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="list-group-item">
+                            <h5 class="mb-1">@review.AppUser</h5>
+                            <p class="mb-1">@review.Comment</p>
+                            <small>Rating: @review.Rating</small>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No reviews yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id"><i class="fa-solid fa-pen-to-square" style="color: #df665d; font-size: 30px"></i></a>
+        }
+        <a asp-action="Index" class="btn" style="border-color: lightcoral"><i class="fa-solid fa-arrow-left"></i>Back</a>
+    </div>
+</div>

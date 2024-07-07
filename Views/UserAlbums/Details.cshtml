@@ -1,0 +1,88 @@
+﻿@model Music.Models.UserAlbum
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Album.Title)</h4>
+    <hr />
+    <div style="display: flex; flex-direction: row;">
+        <div style="width: 400px; margin-right: 20px">
+            <img style="width: inherit" src="@Html.DisplayFor(model => model.Album.FrontPage)" alt="Album cover" />
+        </div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Album.YearPublished)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Album.YearPublished)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Album.NumSongs)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Album.NumSongs)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Album.Artist.StageName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Album.Artist.StageName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Album.AlbumGenres)
+            </dt>
+            <dd class="col-sm-10">
+                @foreach (var genre in Model.Album.AlbumGenres)
+                {
+                    <p>
+                        @genre.Genre.GenreName
+                    </p>
+                }
+            </dd>
+            <hr />
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Album.Reviews)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Album.Reviews != null)
+                {
+                    @foreach (var review in Model.Album.Reviews)
+                    {
+                        <div class="list-group-item">
+                            <h5 class="mb-1">@review.AppUser</h5>
+                            <p class="mb-1">@review.Comment</p>
+                            <small>Rating: @review.Rating</small>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No reviews yet.</p>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form asp-action="AddComment" class="list-group-item" method="post">
+                        <label>Your comment:</label>
+                        <input type="hidden" name="id" value="@Model.Album.Id" />
+                        <input class="form-control" name="input" />
+                        <label>Rating:</label>
+                        <input id="rating" class="form-control" name="rating" />
+                        <td>
+                            <p></p>
+                            <button type="submit" class="btn" style="border-color: lightcoral">Add comment...</button>
+                        </td>
+                    </form>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+<div style="margin-top: 20px">
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id"><i class="fa-solid fa-pen-to-square" style="color: #df665d; font-size: 30px"></i></a>
+    }
+    <a asp-action="Index" class="btn" style="border-color: lightcoral"><i class="fa-solid fa-arrow-left"></i>Back</a>
+</div>

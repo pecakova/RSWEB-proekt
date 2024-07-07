@@ -1,0 +1,78 @@
+﻿@model Music.ViewModels.AlbumGenresViewModel
+
+@{
+    ViewData["Title"] = "";
+    var showAlert = false;
+}
+
+<h1></h1>
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create"><button type="button" class="btn custom-create-button" style="color: black; background-color: white; border-color: black">Create New</button></a>
+    </p>
+}
+<form asp-controller="Albums" asp-action="Index" method="get" class="d-flex align-items-center flex-wrap">
+    <div class="form-group me-3 mb-3">
+        <label for="title">Title:</label>
+        <input id="title" type="text" asp-for="SearchString" class="form-control" />
+    </div>
+    <div class="form-group me-3 mb-3">
+        <label for="artist">Artist:</label>
+        <input id="artist" type="text" asp-for="ArtistSearchString" class="form-control" />
+    </div>
+    <div class="form-group me-3 mb-3">
+        <label for="select" class="form-label">Genre:</label>
+        <select class="form-select" id="select" asp-for="AlbumGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+    </div>
+    <div class="form-group mb-3">
+        <input type="submit" value="Filter" class="btn custom-filter-button" />
+    </div>
+</form>
+<div class="row">
+    @foreach (var album in Model.Albums)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card custom-album-card">
+                <img src="@album.FrontPage" class="card-img-top" alt="Album Image">
+                <div class="card-body">
+                    <h5 class="card-title">@album.Title</h5>
+                    <p class="card-text">Year: @album.YearPublished</p>
+                    <p class="card-text">Artist: @album.Artist.StageName</p>
+                    <p class="card-text">
+                        Genres:
+                        @foreach (var genre in album.AlbumGenres)
+                        {
+                            <a asp-controller="Genres" asp-action="Details" asp-route-id="@genre.GenreId">@genre.Genre.GenreName</a>
+                            @if (!genre.Equals(album.AlbumGenres.Last()))
+                            {
+                                <text>, </text>
+                            }
+                        }
+                    </p>
+                    
+                    <p class="card-text">Rating: @album.AverageRating()</p>
+                    <a asp-action="Details" asp-route-id="@album.Id"><i class="fa-solid fa-circle-info" style="color: black; font-size: 27px"></i></a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@album.Id"><i class="fa-solid fa-pen-to-square" style="color: black; font-size: 27px"></i></a>
+                        <a asp-action="Delete" asp-route-id="@album.Id"><i class="fa-solid fa-trash" style="color: black; font-size: 27px"></i></a>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("IndexById", "Albums", new { id = album.Id })" id="customLink" class="btn d-flex justify-content-end">
+                            <i class="fa-solid fa-cart-shopping" style="color: darkgoldenrod; font-size: 27px;"></i>
+                        </a>
+
+                    }
+                    
+                </div>
+                
+            </div>
+        </div>
+    }
+</div>
+
